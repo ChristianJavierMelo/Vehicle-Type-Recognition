@@ -1,13 +1,19 @@
-# Data Project README file
+# Vehicle type recognition from image data
 
-The README file describes the essence of the project playing the most important role. Most visitors will simply scroll down about twice on the README and leave if they are not interested. So, the README file should provide the reason **why** to checkout your project!!!). 
-Bearing that in mind, your job is to: 
-- Tell them what it is (with context).
-- Show them what it looks like in action.
-- Show them how they use it.
-- Tell them any other relevant details.
+This project aims to recognize vehicles through images. It is based on a Convolutional Neural Network (from now on it is called CNN) following the essence of an unsupervised Machine Learning model.
 
-![Image](https://res.cloudinary.com/springboard-images/image/upload/q_auto,f_auto,fl_lossy/wordpress/2019/05/aiexcerpt.png)
+The intention is to classify a dataset composed of images that includes different types of vehicles including cars, bicycles, boats, trucks, etc. with a total of 17 categories.
+
+The model consists of training data with the class labels and test data without the labels. The project deals to predict the secret labels for the test data.
+
+The dataset has been collected from the Open Images dataset (over 9 million images) using a subset, selected to contain only vehicle categories among the total of 600 object classes.
+
+The dataset consists of two files listed below.
+
+    - The training set (train.zip): a set of images with true labels in the folder names. The zip file contains altogether 28045 files organized in folders. The folder name is the true class; i.e., "Boat" folder has all boat images, "Car" folder has all the car images and so on.
+    - The test set (test.zip): a set of images without labels. The zip file contains altogether 7958 files in a single folder. The file name is the id for the solution's first column; i.e., the predicted class for file "000000.jpg".
+
+![Image](https://cdn.pixabay.com/photo/2016/11/29/10/01/vw-bully-1868890_960_720.jpg)
 
 ---
 
