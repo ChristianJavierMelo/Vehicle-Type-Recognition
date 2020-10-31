@@ -6,6 +6,6 @@ seaborn==0.10.1
 Image==7.2.0
 cv2==4.1.1
 keras==2.4.3
-tensorflow==2.2.0
+tensorflow==2.2.1
 sklearn==0.23.2
 
