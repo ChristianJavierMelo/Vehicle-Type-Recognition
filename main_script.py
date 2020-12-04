@@ -1,15 +1,12 @@
+import os
+import matplotlib.image as mpimg
+import tensorflow as tf
+import streamlit as st
+import streamlit.components.v1 as components
 import argparse
 from p_acquisition import m_acquisition
 from p_analysis import m_analysis
 from p_reporting import m_reporting
-
-import os
-import tensorflow as tf
-
-import matplotlib.image as mpimg
-
-import streamlit as st
-import streamlit.components.v1 as components
 
 
 def argument_parser():
@@ -63,8 +60,8 @@ footer_temp = """
             </div>
     <div class="footer-copyright">
         <div class="container">
-            Made by <a class="white-text text-lighten-3" href="https://jcharistech.wordpress.com">Christian Javier Melo</a><br/>
-            <a class="white-text text-lighten-3" href="https://jcharistech.wordpress.com">Christian Javier Melo</a>
+            Made by <a class="white-text text-lighten-3" href="https://www.linkedin.com/in/christian-javier-melo/">Christian Javier Melo</a><br/>
+            <a class="white-text text-lighten-3" href="https://www.linkedin.com/in/christian-javier-melo/">Christian Javier Melo</a>
             </div>
     </div>
     </footer>
@@ -76,9 +73,8 @@ def main(args):
     assert len(physical_devices) > 0, "Not enough GPU hardware devices available"
     config = tf.config.experimental.set_memory_growth(physical_devices[0], True)
 
-    st.title("Vehicle type recognition in your environment")
-    st.markdown("""This project consists in a **Streamlit visualization** that can be used
-                to predict the vehicle type of your own image""")
+    st.title("Vehicle Type Recognition")
+    st.markdown(""">Project based on **Machine Learning algorithms** shown through **Streamlit** library.""")
 
     menu = ["Home", "Data information", "Recognition App", "About"]
     choice = st.sidebar.selectbox("Menu", menu)
@@ -99,7 +95,8 @@ def main(args):
         # chart_features_model = m_analysis.plot_accuracy(args, train_model)
 
     elif choice == "Recognition App":
-        st.subheader("Vehicle type recognition through your pic")
+        st.markdown("""Vehicle type recognition through a photo made by us or whatever photo 
+        where the vehicle appears in the foreground.""")
         # Predict values
         print("preparing the data to predict...")
         test_dataset = m_reporting.test_dataframe(args)
@@ -114,7 +111,7 @@ def main(args):
         result = m_reporting.plot_image_pred(args,
                                              label_data,
                                              proof,
-                                             indexes=[20,22,29,31],
+                                             indexes=[31],
                                              class_names=label_names)
         directory_plots = sorted(os.listdir("/home/christian/Pictures/"))
         for each in directory_plots:
@@ -122,199 +119,29 @@ def main(args):
         print('done')
 
     elif choice == "About":
-        st.subheader("About App")
+        st.subheader("About Project")
         components.html(footer_temp, height=500)
-        st.markdown("The following versions are to be defined. Possible paths to take are: "
-                    "- Recognition of vehicle and road speed "
-                    "- Recognition of vehicles and pedestrians")
+        st.markdown("The following versions are to be defined. Possible paths to take are:")
         path = sorted(os.listdir("/home/christian/Downloads/next/"))
+        st.markdown("- Road speed according to each predicted vehicle")
         for each in path:
             st.image(mpimg.imread(f"/home/christian/Downloads/next/{each}"), width=None)
+        st.markdown("- Vehicles, pedestrians and sign lights recognition")
 
     else:
         st.subheader("Home")
         html_temp = """
-        <div style="background-color:royalblue;padding:20px;border-radius:20px">
-        <h1 style="color:white;text-align:center;">IMVETY.PRO</h1>
-        <h2 style="color:white;text-align:center;">Vehicle type recognition App</h2>
+        <div style="background-color:royalblue;padding:10px;border-radius:10px">
+        <h1 style="color:white;text-align:center;">Transport vehicle prediction</h1>
+        <h2 style="color:white;text-align:center;">What kind of vehicle is it?</h2>
         </div>
         """
 
         components.html(html_temp)
 
-        st.markdown("Recognition in any **environment**")
-        components.html("""
-            <html>
-            <head>
-            <meta name="viewport" content="width=device-width, initial-scale=1">
-            <style>
-            * {box-sizing: border-box}
-            body {font-family: Verdana, sans-serif; margin:0}
-            .mySlides {display: none}
-            img {vertical-align: middle}
-            
-            /* Slideshow container */
-            .slideshow-container {
-                max-width: 1000px;
-                position: relative;
-                margin: auto;
-            }
-            
-            /* Next & previous buttons */
-            .prev, .next {
-                cursor: pointer;
-                position: absolute;
-                top: 50%;
-                width: auto;
-                padding: 16px;
-                margin-top: -22px;
-                color: white;
-                font-weight: bold;
-                font-size: 18px;
-                transition: 0.6s ease;
-                border-radius: 0 3px 3px 0;
-                user-select: none;
-            }
-            
-            /* Position the "next button" to the right */
-            .next {
-                right: 0;
-                border-radius: 3px 0 0 3px;
-            }
-            
-            /* On hover, add a black background color with a little bit see-through */
-            .prev:hover, .next:hover {
-                background-color: rgba(0,0,0,0.8);
-            }
-            
-            /* Caption text */
-            .text {
-                color: #f2f2f2;
-                font-size: 15px;
-                padding: 8px 12px;
-                position: absolute;
-                bottom: 8px;
-                width: 100%;
-                text-align: center;
-            }
-            
-            /* Number text (1/3 etc) */
-            .numbertext {
-                color: #f2f2f2;
-                font-size: 12px;
-                padding: 8px 12px;
-                position: absolute;
-                top: 0;
-            }
-            
-            /* The dots/bullets/indicators */
-            .dot {
-                cursor: pointer;
-                height: 15px;
-                width: 15px;
-                margin: 0 2px;
-                background-color: #bbb;
-                border-radius: 50%;
-                display: inline-block;
-                transition: background-color 0.6s ease;
-            }
-            
-            .active, .dot:hover {
-                background-color: #717171;
-            }
-            
-            /* Fading animation */
-            .fade {
-                -webkit-animation-name: fade;
-                -webkit-animation-duration: 1.5s;
-                animation-name: fade;
-                animation-duration: 1.5s;
-            }
-            
-            @-webkit-keyframes fade {
-                from {opacity: .4} 
-                to {opacity: 1}
-            }
-            
-            @keyframes fade {
-                from {opacity: .4} 
-                to {opacity: 1}
-            }
-            
-            /* On smaller screens, decrease text size */
-            @media only screen and (max-width: 300px) {
-                .prev, .next,.text {font-size: 11px}
-            }
-            
-            </style>
-            </head>
-            <body>
-            
-            <div class="slideshow-container">
-            
-            <div class="mySlides fade">
-                <div class="numbertext">1 / 3</div>
-                <img src="https://www.w3schools.com/howto/img_nature_wide.jpg" style="width:100%">
-                <div class="text">Caption Text</div>
-            </div>
-            
-            <div class="mySlides fade">
-                <div class="numbertext">2 / 3</div>
-                <img src="https://www.w3schools.com/howto/img_snow_wide.jpg" style="width:100%">
-                <div class="text">Caption Two</div>
-            </div>
-            
-            <div class="mySlides fade">
-                <div class="numbertext">3 / 3</div>
-                <img src="https://www.w3schools.com/howto/img_mountains_wide.jpg" style="width:100%">
-                <div class="text">Caption Three</div>
-            </div>
-            
-            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-            <a class="next" onclick="plusSlides(1)">&#10095;</a>
-            
-            </div>
-            <br>
-            
-            <div style="text-align:center">
-                <span class="dot" onclick="currentSlide(1)"></span> 
-                <span class="dot" onclick="currentSlide(2)"></span> 
-                <span class="dot" onclick="currentSlide(3)"></span> 
-            </div>
-            
-            <script>
-            var slideIndex = 1;
-            showSlides(slideIndex);
-            
-            function plusSlides(n) {
-                showSlides(slideIndex += n);
-            }
-            
-            function currentSlide(n) {
-                showSlides(slideIndex = n);
-            }
-            
-            function showSlides(n) {
-                var i;
-                var slides = document.getElementsByClassName("mySlides");
-                var dots = document.getElementsByClassName("dot");
-                if (n > slides.length) {slideIndex = 1}    
-                if (n < 1) {slideIndex = slides.length}
-                for (i = 0; i < slides.length; i++) {
-                    slides[i].style.display = "none";  
-                }
-                for (i = 0; i < dots.length; i++) {
-                    dots[i].className = dots[i].className.replace(" active", "");
-                }
-                slides[slideIndex-1].style.display = "block";  
-                dots[slideIndex-1].className += " active";
-            }
-            </script>
-            </body>
-            </html> 
-            """)
-
-        st.markdown("In this first version of the project, the objective has been to identify the main types of vehicles with a mobile device")
+        st.markdown("""In this *first version* of the project, **the objective** consists of 
+        **predicting the type of transport vehicle from an image** (between 15 categories) in order to identify 
+        the vehicle in any environment""")
         path = sorted(os.listdir("/home/christian/Downloads/home/"))
         for each in path:
             st.image(mpimg.imread(f"/home/christian/Downloads/home/{each}"), width=None)
